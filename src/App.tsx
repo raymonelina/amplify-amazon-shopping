@@ -7,11 +7,9 @@ import "./App.css";
 
 const client = generateClient<Schema>();
 
-// WARNING: For testing only! Do not expose API tokens in frontend.
-const hfClient = new InferenceClient("");
-
 function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [hfToken, setHfToken] = useState("");
   const [inputUrl, setInputUrl] = useState("");
   const [responseText, setResponseText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,11 +30,17 @@ function App() {
 
   async function handleAskClick() {
     if (!inputUrl.trim()) return;
+    if (!hfToken.trim()) {
+      setResponseText("Please enter your Hugging Face API key.");
+      return;
+    }
 
     setLoading(true);
     setResponseText("Thinking...");
 
     try {
+      const hfClient = new InferenceClient(hfToken);
+
       const chatCompletion = await hfClient.chatCompletion({
         provider: "novita",
         model: "mistralai/Mistral-7B-Instruct-v0.3",
@@ -90,6 +94,12 @@ function App() {
         {/* Right Panel */}
         <section className="right-panel">
           <div className="input-row">
+            <input
+              type="password"
+              placeholder="Enter Hugging Face API key"
+              value={hfToken}
+              onChange={(e) => setHfToken(e.target.value)}
+            />
             <input
               type="text"
               className="url-input"
