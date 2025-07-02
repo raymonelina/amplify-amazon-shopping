@@ -1,42 +1,100 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Top-level container using flex layout */
+.main-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Split container (react-split handles gutters) */
+.split-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Optional: style the draggable gutter */
+.split-container .gutter {
+  background-color: #ddd;
+  cursor: col-resize;
+  width: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Left Panel: Todo UI */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem 1rem 1rem 0.5rem; /* top, right, bottom, left */
+  height: 100%;
+  overflow-y: auto;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: left;
 }
 
-.card {
-  padding: 2em;
+/* Right Panel: Placeholder for future UI */
+.right-panel {
+  padding: 1rem;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
-.read-the-docs {
-  color: #888;
+/* Info note under the todos */
+.info-box {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Reset ul padding */
+.left-panel ul {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+}
+
+/* Container for URL input and button */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Input field: fills remaining space */
+.url-input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Button aligned to the right */
+.ask-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ask-button:hover {
+  background-color: #333;
+}
+
+/* Read-only textarea for output */
+.right-panel .response-box {
+  width: 100%;
+  height: calc(100% - 4.5rem); /* adjust to leave room for input row */
+  resize: none;
+  padding: 0.75rem;
+  font-family: monospace;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
 }
